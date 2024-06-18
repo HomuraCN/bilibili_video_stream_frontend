@@ -29,6 +29,12 @@
       <div>
         <el-button type="primary" @click="downloadVideo()">Download</el-button>
       </div>
+
+      <div>
+        <el-progress :percentage="progress" :text-inside="true" :stroke-width="20">
+          <span>{{ this.currentFileName }}: {{progress}}%</span>
+        </el-progress>
+      </div>
     </div>
   </el-card>
   <div style="height: 1000px"></div>
@@ -36,7 +42,6 @@
 
 <script>
 import axios from "axios";
-import router from "@/router";
 import { ElMessage } from 'element-plus'
 
 axios.defaults.timeout = 5000;
@@ -56,10 +61,12 @@ export default {
     return{
       url: "",
       fileName: "",
+      currentFileName: "",
+      progress: 0,
     };
   },
   mounted() {
-
+    this.downloadProgressSocket()
   },
   methods: {
     downloadVideo(){
@@ -71,6 +78,14 @@ export default {
           type: 'success',
         })
       })
+    },
+    downloadProgressSocket(){
+      const socket = new WebSocket('ws://localhost:9961/progress');
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        this.currentFileName = data.fileName
+        this.progress = data.progress
+      }
     }
   }
 }
