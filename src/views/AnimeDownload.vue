@@ -41,6 +41,12 @@
       <div>
         <el-button type="primary" @click="downloadAnime()">Download</el-button>
       </div>
+
+      <div>
+        <el-progress :percentage="progress" :text-inside="true" :stroke-width="20">
+          <span>{{ this.currentFileName }}: {{progress}}%</span>
+        </el-progress>
+      </div>
     </div>
   </el-card>
   <div style="height: 1000px"></div>
@@ -68,11 +74,13 @@ export default {
     return {
       url: "",
       l: "",
-      r: ""
+      r: "",
+      currentFileName: "",
+      progress: 0,
     };
   },
   mounted() {
-
+    this.downloadProgressSocket()
   },
   methods: {
     downloadAnime(){
@@ -84,6 +92,14 @@ export default {
           type: 'success',
         })
       })
+    },
+    downloadProgressSocket(){
+      const socket = new WebSocket('ws://localhost:9961/progress');
+      socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        this.currentFileName = data.fileName
+        this.progress = data.progress
+      }
     }
   }
 }
