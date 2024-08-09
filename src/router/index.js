@@ -4,6 +4,7 @@ import Login from "@/views/Login.vue";
 import Index from "@/views/Index.vue";
 import VideoDownload from "@/views/VideoDownload.vue"
 import AnimeDownload from "@/views/AnimeDownload.vue";
+import VideoDownloadFromCollection from "@/views/VideoDownloadFromCollection.vue";
 
 const routes = [
     {
@@ -36,6 +37,11 @@ const routes = [
                 path: '/AnimeDownload',
                 name: 'AnimeDownload',
                 component: AnimeDownload
+            },
+            {
+                path: '/VideoDownloadFromCollection',
+                name: 'VideoDownloadFromCollection',
+                component: VideoDownloadFromCollection
             }
         ]
     }

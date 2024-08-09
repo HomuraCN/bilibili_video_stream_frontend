@@ -19,6 +19,9 @@
             <el-menu-item index="/AnimeDownload">
               <span>番剧下载</span>
             </el-menu-item>
+            <el-menu-item index="/VideoDownloadFromCollection">
+              <span>合集视频下载</span>
+            </el-menu-item>
 
           </el-menu>
         </el-affix>
