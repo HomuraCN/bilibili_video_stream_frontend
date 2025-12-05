@@ -93,7 +93,9 @@ export default {
       })
     },
     downloadProgressSocket(){
-      const socket = new WebSocket('ws://localhost:9961/progress');
+      // 连接到 Nginx 服务器的地址和路径
+      // 使用 ws:// 因为你的 Nginx 示例是监听 http (端口 80)
+      const socket = new WebSocket('ws://localhost:9961/progress'); // 或者 'ws://<你的Nginx服务器IP>/progress'
       socket.onmessage = (event) => {
         const data = JSON.parse(event.data);
         this.currentFileName = data.fileName
